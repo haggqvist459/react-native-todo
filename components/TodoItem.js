@@ -1,25 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 
-export default function TodoItem({ item, removeTodo }) {
+export default function TodoItem({ item, removeTodo, toggleTodo }) {
 
-    const todoClicked = () => {
-        // put a strikethrough line on the text to mark it completed 
-    }
+
+    const [isCompleted, setIsCompleted] = useState(item.completed);
+
+
+    // useEffect(() => {
+    //     console.log(isCompleted)
+    //     return () => {
+    //         console.log("error displaying isCompleted");
+    //     }
+    // }, []);
+
 
     return (
         <View style={styles.todoItem}>
-            <TouchableOpacity onClick={todoClicked}>
-                {/* checkbox icon */}
-                <Text style={styles.todoText}>{item.text}</Text>
+            <TouchableOpacity onPress={() => toggleTodo(item.id)}>
+                <View style={styles.todoRow}>
+                    {isCompleted ?
+                        <MaterialIcons style={styles.checkIcon} name="check-circle" size={24} color="black" />
+                        :
+                        <MaterialIcons style={styles.checkIcon} name="check-circle-outline" size={24} color="black" />}
+                    <Text style={[styles.todoText, isCompleted ? styles.todoTextPicked : '']}>{item.text}</Text>
+                </View>
             </TouchableOpacity>
             {/* deletebutton  */}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => removeTodo(item.id)}>
                 <View style={styles.deleteIcon}>
-                    <Ionicons name="remove-circle-outline" size={24} color="black" />
+                    
+                    {/* Use a ternary operator  */}
+                    {isCompleted ? 
+                    <MaterialIcons name="remove-circle" size={24} color="black" />
+                    : 
+                    <MaterialIcons name="remove-circle-outline" size={24} color="black" />}
+
                 </View>
             </TouchableOpacity>
         </View>
@@ -31,29 +50,46 @@ const styles = StyleSheet.create({
         backgroundColor: '#DCFDE4',
         marginVertical: 8,
         marginHorizontal: 8,
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
+
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+
+        borderRadius: 5,
+
+        // temporary
+        // borderWidth: 1,
+        // borderColor: '#000',
         
+    },
+    todoRow: {
+        padding: 10,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+
+        //temporary
+        // borderWidth: 1,
+        // borderColor: '#000',
+        // borderRadius: 5,
     },
     todoText: {
         fontSize: 24,
         fontWeight: 'bold',
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
+    },
+    todoTextPicked: {
+        textDecorationLine: 'line-through'
     },
     deleteIcon: {
-        // display: 'flex',
-        // alignItems: 'center'
         padding: 10,
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
-    }
+
+        // temporary
+        // borderWidth: 1,
+        // borderColor: '#000',
+        // borderRadius: 5,
+    },
+    checkIcon: {
+        paddingRight: 10,
+    },
 });
