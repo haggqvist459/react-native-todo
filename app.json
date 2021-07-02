@@ -4,11 +4,11 @@
     "slug": "test_project",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/todo-icon.png",
+    "icon": "./assets/list.png",
     "splash": {
-      "image": "./assets/todo-icon.png",
+      "image": "./assets/list.png",
       "resizeMode": "contain",
-      "backgroundColor": "#303d66"
+      "backgroundColor": "#DCFDE4"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,12 +21,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/todo-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/list.png",
+        "backgroundColor": "#DCFDE4"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/list.png"
     }
   }
 }

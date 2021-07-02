@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 
 
-export default function TodoItem({ item, removeTodo, toggleTodo }) {
+export default function TodoItem({ item, removeTodoHandler, toggleTodoHandler }) {
 
 
     const [isCompleted, setIsCompleted] = useState(item.completed);
@@ -20,7 +20,7 @@ export default function TodoItem({ item, removeTodo, toggleTodo }) {
 
     return (
         <View style={styles.todoItem}>
-            <TouchableOpacity onPress={() => toggleTodo(item.id)}>
+            <TouchableOpacity onPress={() => toggleTodoHandler(item.id)}>
                 <View style={styles.todoRow}>
                     {isCompleted ?
                         <MaterialIcons style={styles.checkIcon} name="check-circle" size={24} color="black" />
@@ -30,14 +30,14 @@ export default function TodoItem({ item, removeTodo, toggleTodo }) {
                 </View>
             </TouchableOpacity>
             {/* deletebutton  */}
-            <TouchableOpacity onPress={() => removeTodo(item.id)}>
+            <TouchableOpacity onPress={() => removeTodoHandler(item.id)}>
                 <View style={styles.deleteIcon}>
                     
                     {/* Use a ternary operator  */}
                     {isCompleted ? 
-                    <MaterialIcons name="remove-circle" size={24} color="black" />
-                    : 
-                    <MaterialIcons name="remove-circle-outline" size={24} color="black" />}
+                    <MaterialIcons name="remove-circle" size={24} color="black" /> : 
+                    <MaterialIcons name="remove-circle-outline" size={24} color="black" />
+                    }
 
                 </View>
             </TouchableOpacity>
