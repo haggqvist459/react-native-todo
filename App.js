@@ -11,12 +11,14 @@ import Header from './components/Header';
 // EXTRAS: 
 // - Add categories to the todos
 // - Add a picker that filters the categories
+// - Trash can in header to remove entire list
+// - Simple text input validation, e.g. no empty entries
 
 // COMPLETED: 
-// READ DYNAMIC TODO LIST
-// DELETE TODOS INDIVIDUALLY
-// CREATE TODOS
-// HEADER
+// - Read dynamic list of todos
+// - Delete todos individually
+// - Create todos
+// - Header
 
 
 export default function App() {
