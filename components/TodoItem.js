@@ -10,12 +10,12 @@ export default function TodoItem({ item, removeTodo, toggleTodo }) {
     const [isCompleted, setIsCompleted] = useState(item.completed);
 
 
-    useEffect(() => {
-        console.log(isCompleted)
-        return () => {
-            console.log("error displaying isCompleted");
-        }
-    }, []);
+    // useEffect(() => {
+    //     console.log(isCompleted)
+    //     return () => {
+    //         console.log("error displaying isCompleted");
+    //     }
+    // }, []);
 
 
     return (
