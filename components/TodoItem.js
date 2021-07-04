@@ -7,26 +7,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 export default function TodoItem({ item, removeTodoHandler, toggleTodoHandler }) {
 
 
-    const [isCompleted, setIsCompleted] = useState(item.completed);
-
-
-    // useEffect(() => {
-    //     console.log(isCompleted)
-    //     return () => {
-    //         console.log("error displaying isCompleted");
-    //     }
-    // }, []);
-
-
     return (
         <View style={styles.todoItem}>
             <TouchableOpacity onPress={() => toggleTodoHandler(item.id)}>
                 <View style={styles.todoRow}>
-                    {isCompleted ?
+                    {item.completed ?
                         <MaterialIcons style={styles.checkIcon} name="check-circle" size={24} color="black" />
                         :
                         <MaterialIcons style={styles.checkIcon} name="check-circle-outline" size={24} color="black" />}
-                    <Text style={[styles.todoText, isCompleted ? styles.todoTextPicked : '']}>{item.text}</Text>
+                    <Text style={[styles.todoText, item.completed ? styles.todoTextPicked : '']}>{item.text}</Text>
                 </View>
             </TouchableOpacity>
             {/* deletebutton  */}
@@ -34,7 +23,7 @@ export default function TodoItem({ item, removeTodoHandler, toggleTodoHandler })
                 <View style={styles.deleteIcon}>
                     
                     {/* Use a ternary operator  */}
-                    {isCompleted ? 
+                    {item.completed ? 
                     <MaterialIcons name="remove-circle" size={24} color="black" /> : 
                     <MaterialIcons name="remove-circle-outline" size={24} color="black" />
                     }

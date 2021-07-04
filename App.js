@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View, FlatList, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
 import Header from './components/Header';
 
 // TODOS FOR THE TODO LIST: 
-// - Toggle completed / incomplete
-// - Store on device
 
 // EXTRAS: 
+
 // - Add categories to the todos
 // - Add a picker that filters the categories
+
 // - Trash can in header to remove entire list
 // - Simple text input validation, e.g. no empty entries
 
@@ -19,24 +20,44 @@ import Header from './components/Header';
 // - Delete todos individually
 // - Create todos
 // - Header
+// - Toggle completed / incomplete
+// - Store on device
 
 
 export default function App() {
 
   // state with todos
   const [todos, setTodos] = useState([]);
+  const TODO_LIST_STORAGE = 'TODO_LIST_STORAGE';
 
   useEffect(() => {
-    console.log("todos: ", todos)
-    return () => {
-      console.log("error logging todos!")
+    if (todos.length === 0) {
+      // check for todo list in storage
+      AsyncStorage.getItem(TODO_LIST_STORAGE)
+        .then((stringifiedTodoList) => {
+          // if todoList is not null, there's a string to parse
+          if (stringifiedTodoList) {
+            const parsedTodoList = JSON.parse(stringifiedTodoList)
+            setTodos(parsedTodoList);
+          }
+        })
+        .catch( (error) => {
+          // add a catch in case there's an error
+          console.log(error);
+        })
     }
-  }, []);
-
-  // const renderTodos = ({item}) => {
-  //   <TodoItem item={item} />
-  // }
-
+    else if (todos.length > 0) {
+      AsyncStorage.setItem(TODO_LIST_STORAGE, JSON.stringify(todos))
+        .then( () => {
+          // log a success message after storing the todo list
+          console.log('data stored successfully');
+        })
+        .catch((error) => {
+          // add a catch in case there's an error
+          console.log(error);
+        })
+    }
+  });
 
   // function to remove a todo from the list
   const removeTodoHandler = (id) => {
@@ -46,15 +67,14 @@ export default function App() {
     })
   }
 
+  // switch the state of the completed boolean for the clicked 
   const toggleTodoHandler = (id) => {
-    // setTodos((todos) => {
-    //   return todos.map(todo => todo.id == id ? !todos.completed : todos.completed);
-    // })
-    console.log(id);
+    setTodos((todos) => {
+      return todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+    })
   }
 
   const addTodoHandler = (textInput) => {
-
     // create a new object 
     const todo = {
       text: textInput,
@@ -63,25 +83,24 @@ export default function App() {
     }
     setTodos(todos.concat(todo));
     console.log(todos);
-
   }
 
-
+  const renderTodos = ({ item }) => (
+    <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
+  )
 
   return (
     <SafeAreaView style={styles.container}>
       {/* header */}
-      <Header/>
+      <Header />
       <View style={styles.content}>
         <View style={styles.todoList}>
           {/* FlatList with todos */}
           <FlatList
             scrollEnabled={true}
             data={todos}
-            renderItem={({ item }) => (
-              <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
-            )}
-            keyExtractor={item => item.id}
+            renderItem={renderTodos}
+            keyExtractor={(item) => item.id}
           />
         </View>
         {/* create task button */}
@@ -122,21 +141,24 @@ const styles = StyleSheet.create({
 
 
 
-  // const numbers = [1, 2, 3];
-  // // updating existing elements
-  // // map will loop through numbers n in numbers and if its 2, make it 20,
-  // // otherwise the new updated array's element n will be the same as in numbers 
-  // const updated = numbers.map(n => n === 2 ? 20 : n)
-  // // if 20 is an object, have to use spread operator instead
-  // console.log("updated: ", updated);
+// const numbers = [1, 2, 3];
+// // updating existing elements
+// // map will loop through numbers n in numbers and if its 2, make it 20,
+// // otherwise the new updated array's element n will be the same as in numbers 
+// const updated = numbers.map(n => n === 2 ? 20 : n)
+// // if 20 is an object, have to use spread operator instead
+// console.log("updated: ", updated);
 
-      // setTodos((todos) => {
-    //   return [
-    //     { 
-    //       text: textInput,
-    //       id: 4,
-    //       completed: false 
-    //     },
-    //     ...todos
-    //   ]
-    // })
+// setTodos((todos) => {
+//   return [
+//     { 
+//       text: textInput,
+//       id: 4,
+//       completed: false 
+//     },
+//     ...todos
+//   ]
+// })
+
+
+
