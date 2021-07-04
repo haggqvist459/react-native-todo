@@ -140,25 +140,3 @@ const styles = StyleSheet.create({
 
 
 
-
-// const numbers = [1, 2, 3];
-// // updating existing elements
-// // map will loop through numbers n in numbers and if its 2, make it 20,
-// // otherwise the new updated array's element n will be the same as in numbers 
-// const updated = numbers.map(n => n === 2 ? 20 : n)
-// // if 20 is an object, have to use spread operator instead
-// console.log("updated: ", updated);
-
-// setTodos((todos) => {
-//   return [
-//     { 
-//       text: textInput,
-//       id: 4,
-//       completed: false 
-//     },
-//     ...todos
-//   ]
-// })
-
-
-
