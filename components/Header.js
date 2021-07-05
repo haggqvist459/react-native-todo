@@ -1,25 +1,15 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { headerStyles } from '../styles/global';
 
-export default function Header(){
-    return(
-        <View style={styles.header}>
-            <Text style={styles.headerText}>Things To do</Text>
+export default function Header({ deleteList }) {
+    return (
+        <View style={headerStyles.header}>
+            <Text style={headerStyles.headerText}>Things to do</Text>
+            <TouchableOpacity onPress={() => deleteList()}>
+                <MaterialIcons name="delete-sweep" size={42} color="black" />
+            </TouchableOpacity>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    header: {
-        height: '15%',
-        backgroundColor: '#DCFDE4',
-        // marginBottom: '7.5%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-      headerText: {
-        fontSize: 28,
-        fontWeight: 'bold',
-      },
-})
