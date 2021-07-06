@@ -1,13 +1,27 @@
 import { StyleSheet } from "react-native";
 
+//#DCFDE4 - nyanza 
+//#DCFDF5 - light cyan
+//#E5FDDC - also called nyanza, slightly darker
+//#FCFFFC - baby powder
+
+export const colors = {
+    primary: '#E5FDDC',
+    secondary: '#FDDCF5',
+    primaryText: '#23021B',
+    background: '#EDEDED',
+}
+
+
+
 export const appStyles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: colors.background,
     },
     header: {
         height: '15%',
-        backgroundColor: '#DCFDE4',
-        paddingVertical: '7.5%',
+        backgroundColor: colors.primary,
         display: 'flex',
         alignItems: 'center',
     },
@@ -28,7 +42,7 @@ export const appStyles = StyleSheet.create({
 export const headerStyles = StyleSheet.create({
     header: {
         height: '15%',
-        backgroundColor: '#DCFDE4',
+        backgroundColor: colors.primary,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -37,6 +51,7 @@ export const headerStyles = StyleSheet.create({
     headerText: {
         fontSize: 32,
         fontWeight: 'bold',
+        color: colors.primaryText,
     },
 });
 
@@ -51,7 +66,7 @@ export const addTodoStyles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomLeftRadius: 3,
         borderBottomRightRadius: 3,
-        borderBottomColor: '#DCFDE4',
+        borderBottomColor: colors.primaryText,
     },
     textInput: {
         fontSize: 28,
@@ -59,12 +74,12 @@ export const addTodoStyles = StyleSheet.create({
     },
     addIcon: {
         paddingRight: 10,
-    }
+    },
 });
 
 export const todoItemStyles = StyleSheet.create({
     todoItem: {
-        backgroundColor: '#DCFDE4',
+        backgroundColor: colors.primary,
         marginVertical: 8,
         marginHorizontal: 8,
         display: 'flex',

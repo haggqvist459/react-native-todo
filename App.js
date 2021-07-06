@@ -1,38 +1,45 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { SafeAreaView, View, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, View, FlatList, Alert } from 'react-native';
+// import { Accelerometer } from 'expo-sensors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
 import Header from './components/Header';
 import { appStyles } from './styles/global';
 
-// TODOS FOR THE TODO LIST: 
+/*
+ TODOS FOR THE TODO LIST: 
+ - Remove unused imports
 
-// EXTRAS: 
-// - Add categories to the todos
-// - Add a picker that filters the categories
+ - Add a picker that filters the categories
 
-// - Simple text input validation, e.g. no empty entries
-// - Global styles
+ */
 
+/*
 
-// COMPLETED: 
-// - Read dynamic list of todos
-// - Delete todos individually
-// - Create todos
-// - Header
-// - Toggle completed / incomplete
-// - Store on device / load from device
+COMPLETED: 
 
-// EXTRAS COMPLETED: 
-// - Trash can in header to remove entire list
+- Read dynamic list of todos
+- Delete todos individually
+- Create todos
+- Header
+- Toggle completed / incomplete
+- Store on device / load from device
+- Global styles
+
+EXTRAS COMPLETED: 
+
+- Trash can in header to remove entire list
+- Add alert before delete all
+- Simple text input validation, e.g. no empty entries
+
+*/
 
 export default function App() {
 
   // state with todos
   const [todos, setTodos] = useState([]);
 
-  const firstRender = useRef(true);
   // constant for AsyncStorage
   const TODO_LIST_STORAGE = 'TODO_LIST_STORAGE';
 
@@ -53,7 +60,6 @@ export default function App() {
     saveToStorage();
   }, [todos]);
 
-
   const saveToStorage = async () => {
     try {
       await AsyncStorage.setItem(TODO_LIST_STORAGE, JSON.stringify(todos))
@@ -65,7 +71,6 @@ export default function App() {
       console.log(error);
     }
   }
-
 
   const loadFromStorage = async () => {
     try {
@@ -83,61 +88,49 @@ export default function App() {
     }
   }
 
-  // function to remove a todo from the list
   const removeTodoHandler = (id) => {
-
-    // filter through the todos array, look for the todo with the correct id and remove it
-    const updatedTodos = todos.filter(todo => todo.id != id);
-    // save the updated todos into the state
-    setTodos(updatedTodos);
-
-
-    // //update the state, filter the todo based on its id
-    // setTodos((todos) => {
-    //   return todos.filter(todo => todo.id != id);
-    // });
-
-    console.log("removeTodoHandler: ", todos);
+    console.log("removeTodoHandler: ", id);
+    setTodos((todos) => {
+      return todos.filter(todo => todo.id != id);
+    });
   }
 
-  // switch the state of the completed boolean for the clicked 
   const toggleTodoHandler = (id) => {
-
-    // map through the todos array, look for the todo with correct id and flip the completed value
-    const updatedTodos = todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo);
-    // save the updated todos into the state
-    setTodos(updatedTodos);
-
-    // setTodos((todos) => {
-    //   return todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
-    // });
-
-    console.log("toggleTodoHandler: ", todos);
+    console.log("toggleTodoHandler: ", id);
+    setTodos((todos) => {
+      return todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+    });
   }
 
   const addTodoHandler = (textInput) => {
 
-    // create a new object with the text input & default values
-    const todo = {
+    // if the string.length is too short, post alert instead of adding todo
+    if (textInput.length <= 2) {
+      console.log("input too short!");
+      createAlert();
+      return; 
+    }
+
+    console.log("addTodoHandler: ", textInput);
+    setTodos(todos.concat({
       text: textInput,
       id: (new Date().getTime()).toString(),
       completed: false
-    }
-
-    //  add the new todo object to the todos array
-    const updatedTodos = todos.concat(todo);
-
-    // save the updated todos into the state
-    setTodos(updatedTodos);
-
-
-    // setTodos(todos.concat(todo));
-    console.log("addTodoHandler: ", todos);
+    }));
   }
 
   //wipe the todo list by reverting it back to its initial state
   const deleteList = () => {
     setTodos([]);
+  }
+
+  // create an alert in case todo input is too short 
+  const createAlert = () => {
+    Alert.alert(
+      "Input too short!",
+      " ",
+      [{ text: "OK" }],
+    )
   }
 
   // function to render the todo items in the flatlist component
@@ -148,7 +141,7 @@ export default function App() {
   return (
     <SafeAreaView style={appStyles.container}>
       {/* header */}
-      <Header deleteList={deleteList}/>
+      <Header deleteList={deleteList} />
       <View style={appStyles.content}>
         <View style={appStyles.todoList}>
           {/* FlatList with todos */}
