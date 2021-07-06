@@ -12,11 +12,9 @@ import { appStyles } from './styles/global';
  - Remove unused imports
 
  - Add a picker that filters the categories
-
  */
 
 /*
-
 COMPLETED: 
 
 - Read dynamic list of todos
