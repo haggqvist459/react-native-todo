@@ -24,7 +24,7 @@ export default function AddTodo({ addTodoHandler }) {
                 onChangeText={textInputHandler}
             />
             <TouchableOpacity onPress={() => { addTodoHandler(textInput); clearInput() }}>
-                <MaterialIcons style={addTodoStyles.addIcon} name="add-circle" size={36} color={colors.primaryText}/>
+                <MaterialIcons style={addTodoStyles.addIcon} name="playlist-add" size={36} color={colors.primaryText}/>
             </TouchableOpacity>
         </View>
     )

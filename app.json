@@ -27,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/list.png"
-    }
+    },
+    "description": "react native todo app "
   }
 }

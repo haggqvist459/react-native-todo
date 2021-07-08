@@ -5,7 +5,7 @@ import { headerStyles, colors } from '../styles/global';
 
 export default function Header({ deleteList }) {
 
-    const createTwoButtonAlert = () => {
+    const createAlert = () => {
         Alert.alert(
             "Clear list",
             "Are you sure you want to clear the list?",
@@ -19,7 +19,7 @@ export default function Header({ deleteList }) {
     return (
         <View style={headerStyles.header}>
             <Text style={headerStyles.headerText}>Things to do</Text>
-            <TouchableOpacity onPress={createTwoButtonAlert}>
+            <TouchableOpacity onPress={createAlert}>
                 <MaterialIcons name="delete-sweep" size={42} color={colors.primaryText} />
             </TouchableOpacity>
         </View>
