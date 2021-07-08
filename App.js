@@ -1,42 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, FlatList, Alert } from 'react-native';
+import { SafeAreaView, View, FlatList, Alert, } from 'react-native';
 // import { Accelerometer } from 'expo-sensors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
 import Header from './components/Header';
+import CategoryPicker from './components/CategoryPicker';
 import { appStyles } from './styles/global';
-
-/*
- TODOS FOR THE TODO LIST: 
- - Remove unused imports
-
- - Add a picker that filters the categories
- */
-
-/*
-COMPLETED: 
-
-- Read dynamic list of todos
-- Delete todos individually
-- Create todos
-- Header
-- Toggle completed / incomplete
-- Store on device / load from device
-- Global styles
-
-EXTRAS COMPLETED: 
-
-- Trash can in header to remove entire list
-- Add alert before delete all
-- Simple text input validation, e.g. no empty entries
-
-*/
 
 export default function App() {
 
   // state with todos
   const [todos, setTodos] = useState([]);
+
+  // state to hold the category selection
+  const [category, setCategory] = useState();
+
+  // state with the filtered todos, used to supply the flatlist with data
+  const [filteredTodos, setFilteredTodos] = useState([]);
 
   // constant for AsyncStorage
   const TODO_LIST_STORAGE = 'TODO_LIST_STORAGE';
@@ -52,12 +33,57 @@ export default function App() {
     }
   }, []);
 
+  // filter the todo data based on the selected category
+  useEffect(() => {
+    console.log("useEffect, [category]");
+    console.log("category selected: ", category);
+    filterTodoData(category);
+  }, [category]);
+
   // save to storage after each render when state of todos has been changed. 
   useEffect(() => {
     console.log("useEffect, [todos]");
     saveToStorage();
+    filterTodoData(category);
   }, [todos]);
 
+  // function to handle the selected item from the picker 
+  const handleSelectedCategory = (value) => {
+    // filter the todos based on the selected category
+    setCategory(value);
+  }
+
+  // filter the todo list based on the category selection
+  const filterTodoData = (value) => {
+
+    var updatedTodos = [];
+
+    switch (value) {
+      case 'all':
+        // supply the unfiltered todo list as data to the flatlist
+        console.log('switch case all');
+        setFilteredTodos(todos);
+        break;
+      case 'completed':
+        // supply the completed todos as data to the flatlist
+        console.log('switch case completed');
+        updatedTodos = todos.filter(todo => todo.completed == true);
+        setFilteredTodos(updatedTodos);
+        break;
+      case 'remaining':
+        // supply the incomplete todos as data to the flatlist
+        console.log('switch case remaining');
+        updatedTodos = todos.filter(todo => todo.completed == false);
+        setFilteredTodos(updatedTodos);
+        break;
+      default:
+        // supply the unfiltered todo list as data to the flatlist
+        console.log('switch case default');
+        setFilteredTodos(todos);
+    }
+  }
+
+  // save todo list from storage
   const saveToStorage = async () => {
     try {
       await AsyncStorage.setItem(TODO_LIST_STORAGE, JSON.stringify(todos))
@@ -70,6 +96,7 @@ export default function App() {
     }
   }
 
+  // load todo list from storage
   const loadFromStorage = async () => {
     try {
       await AsyncStorage.getItem(TODO_LIST_STORAGE)
@@ -86,6 +113,7 @@ export default function App() {
     }
   }
 
+  // remove a todo based on its supplied id
   const removeTodoHandler = (id) => {
     console.log("removeTodoHandler: ", id);
     setTodos((todos) => {
@@ -93,6 +121,7 @@ export default function App() {
     });
   }
 
+  // toggle the completed boolean between true and false
   const toggleTodoHandler = (id) => {
     console.log("toggleTodoHandler: ", id);
     setTodos((todos) => {
@@ -100,13 +129,14 @@ export default function App() {
     });
   }
 
+  // add a todo object to the array of todos
   const addTodoHandler = (textInput) => {
 
     // if the string.length is too short, post alert instead of adding todo
     if (textInput.length <= 2) {
       console.log("input too short!");
       createAlert();
-      return; 
+      return;
     }
 
     console.log("addTodoHandler: ", textInput);
@@ -138,21 +168,59 @@ export default function App() {
 
   return (
     <SafeAreaView style={appStyles.container}>
-      {/* header */}
-      <Header deleteList={deleteList} />
+      {/* view for the header, picker and flatlist */}
       <View style={appStyles.content}>
+        {/* header */}
+        <Header deleteList={deleteList} />
+        {/* picker menu for the categories */}
+        <CategoryPicker handleSelectedCategory={handleSelectedCategory} />
         <View style={appStyles.todoList}>
           {/* FlatList with todos */}
           <FlatList
-            scrollEnabled={true}
-            data={todos}
+            data={filteredTodos}
             renderItem={renderTodos}
             keyExtractor={(item) => item.id}
           />
         </View>
-        {/* create task button */}
+      </View>
+      {/* bottom view to align the addTodo component at the bottom  */}
+      <View style={appStyles.bottomView}>
+        {/* create todo button */}
         <AddTodo addTodoHandler={addTodoHandler} />
       </View>
     </SafeAreaView>
   );
 }
+
+
+/*
+ TODOS FOR THE TODO LIST:
+
+
+ EXTRAS: 
+ - add comments to components
+
+*/
+
+/*
+
+COMPLETED:
+
+- Read dynamic list of todos
+- Delete todos individually
+- Create todos
+- Header
+- Toggle completed / incomplete
+- Store on device / load from device
+- Global styles
+- Remove unused imports
+
+EXTRAS COMPLETED:
+
+- Trash can in header to remove entire list
+- Add alert before delete all
+- Simple text input validation, e.g. no empty entries
+- Add a picker that filters the categories
+
+*/
+

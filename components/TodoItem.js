@@ -8,29 +8,19 @@ export default function TodoItem({ item, removeTodoHandler, toggleTodoHandler })
 
     return (
         <View style={todoItemStyles.todoItem}>
-            <TouchableOpacity onPress={() => toggleTodoHandler(item.id)}>
-                <View style={todoItemStyles.todoRow}>
-                    {item.completed ?
-                        <MaterialIcons style={todoItemStyles.checkIcon} name="check-circle" size={24} color={colors.primaryText} />
-                        :
-                        <MaterialIcons style={todoItemStyles.checkIcon} name="check-circle-outline" size={24} color={colors.primaryText} />
-                    }
-                    <Text style={[todoItemStyles.todoText, item.completed ? todoItemStyles.todoTextPicked : '']}>{item.text}</Text>
-                </View>
+            <TouchableOpacity style={todoItemStyles.todoRow} onPress={() => toggleTodoHandler(item.id)}>
+                <MaterialIcons  style={todoItemStyles.checkIcon} name={`check-circle${item.completed ? '' : '-outline'}`} size={30} color={colors.primaryText} />
+                <Text style={[todoItemStyles.todoText, item.completed ? todoItemStyles.todoTextPicked : '']}>{item.text}</Text>
             </TouchableOpacity>
-            {/* deletebutton  */}
-            <TouchableOpacity onPress={() => removeTodoHandler(item.id)}>
-                <View style={todoItemStyles.deleteIcon}>
-
-                    {/* Use a ternary operator  */}
-                    {item.completed ?
-                        <MaterialIcons name="remove-circle" size={24} color={colors.primaryText} />
-                        :
-                        <MaterialIcons name="remove-circle-outline" size={24} color={colors.primaryText} />
-                    }
-
-                </View>
+            <TouchableOpacity style={todoItemStyles.deleteIcon} onPress={() => removeTodoHandler(item.id)}>
+                <MaterialIcons name={`remove-circle${item.completed ? '' : '-outline'}`} size={30} color={colors.primaryText} />
             </TouchableOpacity>
         </View>
     )
 }
+
+
+/*
+
+
+*/
