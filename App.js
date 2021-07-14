@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, FlatList, Alert, } from 'react-native';
+import { SafeAreaView, View, FlatList, Alert, StatusBar, } from 'react-native';
 // import { Accelerometer } from 'expo-sensors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import TodoItem from './components/TodoItem';
-import AddTodo from './components/AddTodo';
-import Header from './components/Header';
-import CategoryPicker from './components/CategoryPicker';
-import { appStyles } from './styles/global';
+import { Accelero, AddTodo, CategoryPicker, Header, TodoItem  } from './components';
+import { appStyles, colors } from './styles/global';
+
 
 export default function App() {
 
@@ -168,6 +166,9 @@ export default function App() {
 
   return (
     <SafeAreaView style={appStyles.container}>
+      <StatusBar 
+      backgroundColor={colors.primary}
+      barStyle='dark-content'/>
       {/* view for the header, picker and flatlist */}
       <View style={appStyles.content}>
         {/* header */}
