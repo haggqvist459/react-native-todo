@@ -1,53 +1,66 @@
 import { ACTIONS } from '../../utils/constants';
+import { v4 as uuid } from 'uuid';
 
-const initialState = {
-        allIds: [],
-        byIds: {}
+const initialState = [];
+
+const todoReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ACTIONS.ADD_ITEM: {
+      return [
+        ...state,
+        {
+          id: uuid(),
+          text: action.payload.text,
+          completed: false
+        }
+      ];
+    }
+    
+    default:
+      return state;
+  }
 }
 
+export default todoReducer;
 
-export default function(state = initialState, action) {
-        switch (action.type) {
-          case ACTIONS.ADD_ITEM: {
-            const { id, content } = action.payload;
-            return {
-              ...state,
-              allIds: [...state.allIds, id],
-              byIds: {
-                ...state.byIds,
-                [id]: {
-                  content,
-                  picked: false
-                }
-              }
-            };
+/* 
+case ACTIONS.ADD_ITEM: {
+      const { id, content } = action.payload;
+      return {
+        ...state,
+        allIds: [...state.allIds, id],
+        byIds: {
+          ...state.byIds,
+          [id]: {
+            content,
+            completed: false
           }
-          case ACTIONS.TOGGLE_ITEM: {
-            const { id } = action.payload;
-            return {
-              ...state,
-              byIds: {
-                ...state.byIds,
-                [id]: {
-                  ...state.byIds[id],
-                  picked: !state.byIds[id].picked
-                }
-              }
-            };
-          }
-          case ACTIONS.DELETE_ITEM: {
-            // probably not the way to go about it. check the javascript stuff project!
-            delete state.byIds[action.payload.id]; 
-            return {
-              allIds: state.allIds.filter(item => item !== action.payload.id),
-              byIds: state.byIds
-            };
-          }
-          case ACTIONS.DELETE_ALL: {
-            return state = initialState
-          }
-          default:
-            return state;
         }
-      }
-      
+      };
+    }
+case ACTIONS.TOGGLE_ITEM: {
+      const { id } = action.payload;
+      return {
+        ...state,
+        byIds: {
+          ...state.byIds,
+          [id]: {
+            ...state.byIds[id],
+            picked: !state.byIds[id].picked
+          }
+        }
+      };
+    }
+    case ACTIONS.DELETE_ITEM: {
+      // probably not the way to go about it. check the javascript stuff project!
+      delete state.byIds[action.payload.id];
+      return {
+        allIds: state.allIds.filter(item => item !== action.payload.id),
+        byIds: state.byIds
+      };
+    }
+    case ACTIONS.DELETE_ALL: {
+      return state = initialState
+    }
+    
+    */

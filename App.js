@@ -3,7 +3,6 @@ import { SafeAreaView, View, FlatList, Alert, StatusBar, } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './src/redux/store'
 // import { Accelerometer } from 'expo-sensors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AddTodo, CategoryPicker, CustomAlert, Header, TodoItem } from './src/components';
 import { appStyles, colors } from './styles/global';
 
@@ -19,7 +18,7 @@ export default function App() {
   useEffect(() => {
     console.log("useEffect, []");
     if (todos.length === 0) {
-      loadFromStorage();
+      // loadFromStorage();
     }
   }, []);
 
@@ -31,7 +30,7 @@ export default function App() {
 
   useEffect(() => {
     console.log("useEffect, [todos]");
-    saveToStorage();
+    // saveToStorage();
     filterTodoData(category);
   }, [todos]);
 
@@ -102,7 +101,7 @@ export default function App() {
           </View>
         </View>
         <View style={appStyles.bottomView}>
-          <AddTodo addTodoHandler={addTodoHandler} />
+          <AddTodo />
         </View>
       </SafeAreaView>
     </Provider>

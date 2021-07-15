@@ -6,8 +6,17 @@ import { addTodoStyles, colors  } from '../../styles/global';
 import { ACTIONS } from '../utils/constants';
 
 // call the redux store actions add here
+/*
 
-export default function AddTodo({ addTodoHandler }) {
+ if (textInput.length <= 2) {
+      console.log("input too short!");
+      createAlert();
+      return;
+    }
+
+
+*/
+export default function AddTodo() {
 
     const dispatch = useDispatch();
     const [textInput, setTextInput] = useState('');
@@ -20,6 +29,17 @@ export default function AddTodo({ addTodoHandler }) {
         setTextInput('');
     }
 
+    const addTodo = () => {
+        if (textInput.length <= 2) {
+            console.log("input too short!");
+            createAlert();
+            return;
+        } else {
+            dispatch({type: ACTIONS.ADD_ITEM, payload: { text: textInput }});
+            clearInput();
+        }
+    }
+
     return (
         <View style={addTodoStyles.addTodo}>
             <TextInput
@@ -28,7 +48,7 @@ export default function AddTodo({ addTodoHandler }) {
                 placeholder='What to do?'
                 onChangeText={textInputHandler}
             />
-            <TouchableOpacity onPress={() => {dispatch({type: ACTIONS.ADD_ITEM }), clearInput()}}>
+            <TouchableOpacity onPress={() => addTodo()}>
                 <MaterialIcons style={addTodoStyles.addIcon} name="playlist-add" size={36} color={colors.primaryText}/>
             </TouchableOpacity>
         </View>
