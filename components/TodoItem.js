@@ -18,9 +18,3 @@ export default function TodoItem({ item, removeTodoHandler, toggleTodoHandler })
         </View>
     )
 }
-
-
-/*
-
-
-*/

@@ -14,6 +14,13 @@ export const colors = {
     background: '#EDEDED',
 }
 
+// not implemented yet
+export const variables = {
+    iconSize: 30,
+    fontSizeList: 22,
+    fontSizeInput: 28
+    
+}
 
 export const appStyles = StyleSheet.create({
     container: {
@@ -65,7 +72,8 @@ export const addTodoStyles = StyleSheet.create({
     },
     textInput: {
         fontSize: 28,
-        marginBottom: 10,
+        marginTop: 15,
+        paddingBottom: 10,
     },
     addIcon: {
         paddingRight: 10,
@@ -126,26 +134,28 @@ export const todoItemStyles = StyleSheet.create({
 
 export const pickerStyle = StyleSheet.create({
     inputIOS: {
-        alignSelf: 'center',
         backgroundColor: colors.primary,
         color: colors.primaryText,
         width: '100%',
         fontSize: 20,
         textAlign: 'center',
         fontWeight: 'bold',
+        paddingVertical: 5,
+
         // temporary dev styles
         // borderColor: colors.primaryText,
         // borderWidth: 1,
         // borderRadius: 5,
     },
     inputAndroid: {
-        alignSelf: 'center',
         backgroundColor: colors.primary,
+        color: colors.primaryText,
         width: '100%',
+        fontSize: 20,
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 20,
-        color: colors.primaryText,
+        paddingVertical: 5,
+
         // temporary dev styles
         // borderColor: colors.primaryText,
         // borderWidth: 1,
