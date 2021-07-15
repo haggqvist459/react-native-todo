@@ -17,6 +17,8 @@ export const setFilter = filter => ({
   payload: { filter }
 });
 
+
+// replace parameter item with id, and only pass id in payload
 export const deleteItem = item => ({
   type: ACTIONS.DELETE_ITEM,
   payload: {

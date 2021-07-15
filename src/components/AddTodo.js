@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
+import { View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import { addTodoStyles, colors  } from '../../styles/global';
@@ -39,6 +39,14 @@ export default function AddTodo() {
             clearInput();
         }
     }
+
+    const createAlert = () => {
+        Alert.alert(
+          "Input too short!",
+          " ",
+          [{ text: "OK" }],
+        )
+      }
 
     return (
         <View style={addTodoStyles.addTodo}>

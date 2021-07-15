@@ -71,14 +71,6 @@ export default function App() {
     setTodos([]);
   }
 
-  const createAlert = () => {
-    Alert.alert(
-      "Input too short!",
-      " ",
-      [{ text: "OK" }],
-    )
-  }
-
   const renderTodos = ({ item }) => (
     <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
   )

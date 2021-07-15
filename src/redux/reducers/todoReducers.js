@@ -15,7 +15,23 @@ const todoReducer = (state = initialState, action) => {
         }
       ];
     }
-    
+    case ACTIONS.TOGGLE_ITEM: {
+      /* 
+      console.log("toggleTodoHandler: ", id);
+      return todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+      */
+    }
+    case ACTIONS.DELETE_ITEM: {
+      /* 
+      console.log("removeTodoHandler: ", id);
+      return todos.filter(todo => todo.id != id);
+      */
+    }
+    case ACTIONS.DELETE_ALL: {
+      /* 
+        return state = initialState;
+      */
+    }
     default:
       return state;
   }
