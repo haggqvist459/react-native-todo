@@ -7,7 +7,7 @@ import { ACTIONS } from '../utils/constants';
 
 // call the redux store actions add here
 
-export default function AddTodo({ addTodoHandler }) {
+export default function AddTodo() {
 
     const dispatch = useDispatch();
     const [textInput, setTextInput] = useState('');
