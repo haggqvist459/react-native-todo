@@ -1,10 +1,12 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { todoItemStyles, colors } from '../styles/global';
+import { todoItemStyles, colors } from '../../styles/global';
 
+// call the redux store actions delete and toggle here
 
 export default function TodoItem({ item, removeTodoHandler, toggleTodoHandler }) {
+
 
     return (
         <View style={todoItemStyles.todoItem}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { pickerStyle } from '../styles/global';
+import { pickerStyle } from '../../styles/global';
 
 
 export default function CategoryPicker({ handleSelectedCategory }) {

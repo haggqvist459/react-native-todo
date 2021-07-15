@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList, Alert, StatusBar, } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './src/redux/store'
 // import { Accelerometer } from 'expo-sensors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AddTodo, CategoryPicker, CustomAlert, Header, TodoItem } from './components';
+import { AddTodo, CategoryPicker, CustomAlert, Header, TodoItem } from './src/components';
 import { appStyles, colors } from './styles/global';
 
 
@@ -65,6 +67,51 @@ export default function App() {
         setFilteredTodos(todos);
     }
   }
+  
+  const deleteList = () => {
+    setTodos([]);
+  }
+
+  const createAlert = () => {
+    Alert.alert(
+      "Input too short!",
+      " ",
+      [{ text: "OK" }],
+    )
+  }
+
+  const renderTodos = ({ item }) => (
+    <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
+  )
+
+  return (
+    <Provider store={store}>
+      <SafeAreaView style={appStyles.container}>
+        <StatusBar
+          backgroundColor={colors.primary}
+          barStyle='dark-content' />
+        <View style={appStyles.content}>
+          <Header deleteList={deleteList} />
+          <CategoryPicker handleSelectedCategory={handleSelectedCategory} />
+          <View style={appStyles.todoList}>
+            <FlatList
+              data={filteredTodos}
+              renderItem={renderTodos}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+        </View>
+        <View style={appStyles.bottomView}>
+          <AddTodo addTodoHandler={addTodoHandler} />
+        </View>
+      </SafeAreaView>
+    </Provider>
+  );
+}
+
+
+/* 
+
 
   const saveToStorage = async () => {
     try {
@@ -93,6 +140,8 @@ export default function App() {
       console.log(error);
     }
   }
+
+
 
   const removeTodoHandler = (id) => {
     console.log("removeTodoHandler: ", id);
@@ -124,50 +173,5 @@ export default function App() {
     }));
   }
 
-  const deleteList = () => {
-    setTodos([]);
-  }
 
-  const createAlert = () => {
-    Alert.alert(
-      "Input too short!",
-      " ",
-      [{ text: "OK" }],
-    )
-  }
-
-
-
-
-
-
-  const renderTodos = ({ item }) => (
-    <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
-  )
-
-  return (
-    <SafeAreaView style={appStyles.container}>
-      <StatusBar
-        backgroundColor={colors.primary}
-        barStyle='dark-content' />
-      <View style={appStyles.content}>
-        <Header deleteList={deleteList} />
-        <CategoryPicker handleSelectedCategory={handleSelectedCategory} />
-        <View style={appStyles.todoList}>
-          <FlatList
-            data={filteredTodos}
-            renderItem={renderTodos}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
-      </View>
-      <View style={appStyles.bottomView}>
-        <AddTodo addTodoHandler={addTodoHandler} />
-      </View>
-    </SafeAreaView>
-  );
-}
-
-
-
-
+*/

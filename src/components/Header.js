@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { headerStyles, colors } from '../styles/global';
+import { headerStyles, colors } from '../../styles/global';
 
 export default function Header({ deleteList }) {
 

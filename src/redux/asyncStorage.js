@@ -1,4 +1,4 @@
-const TODO_LIST_STORAGE = 'TODO_LIST_STORAGE';
+import { TODO_LIST_STORAGE } from "../utils/constants";
 
 export const loadFromStorage = () => {
         try {
