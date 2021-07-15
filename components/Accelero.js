@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Accelerometer } from 'expo-sensors';
+// import { Accelerometer } from 'expo-sensors';
 
 const Accelero = () =>  {
 
@@ -14,7 +14,6 @@ const Accelero = () =>  {
         const subscribe = () => {
                 setSubscription(
                         Accelerometer.addListener(accelerometerData => {
-                                // do the check here?
                                 setData(accelerometerData);
                         }),
                 );
