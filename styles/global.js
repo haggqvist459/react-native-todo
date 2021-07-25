@@ -32,10 +32,6 @@ export const appStyles = StyleSheet.create({
         // you can add vertical padding 
         // if you add horizontal padding it will affect the position of the addTodo component
     },
-    todoList: {
-        height: '80%',
-        paddingBottom: 10,
-    },
     bottomView: {
         paddingBottom: 40
     }
@@ -79,6 +75,13 @@ export const addTodoStyles = StyleSheet.create({
         paddingRight: 10,
     },
 });
+
+export const todoListStyles = StyleSheet.create({
+    todoList: {
+        height: '80%',
+        paddingBottom: 10,
+    },
+})
 
 export const todoItemStyles = StyleSheet.create({
     todoItem: {

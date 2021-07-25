@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, FlatList, Alert, StatusBar, } from 'react-native';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import store from './src/redux/store'
 // import { Accelerometer } from 'expo-sensors';
-import { AddTodo, CategoryPicker, CustomAlert, Header, TodoItem } from './src/components';
+import { AddTodo, CategoryPicker, CustomAlert, Header, TodoList } from './src/components';
 import { appStyles, colors } from './styles/global';
 
 
 export default function App() {
 
-  const TODO_LIST_STORAGE = 'TODO_LIST_STORAGE';
+  //   const todoList = useSelector(state => state.todos);
+    // console.log('todoList ', todoList);
+
   const [todos, setTodos] = useState([]);
   const [category, setCategory] = useState();
-  const [filteredTodos, setFilteredTodos] = useState([]);
+  
 
 
   useEffect(() => {
     console.log("useEffect, []");
+    // console.log('todoList ', todoList);
     if (todos.length === 0) {
       // loadFromStorage();
     }
@@ -25,55 +28,24 @@ export default function App() {
   useEffect(() => {
     console.log("useEffect, [category]");
     console.log("category selected: ", category);
-    filterTodoData(category);
+    // filterTodoData(category);
   }, [category]);
 
   useEffect(() => {
     console.log("useEffect, [todos]");
     // saveToStorage();
-    filterTodoData(category);
+    // filterTodoData(category);
   }, [todos]);
 
   const handleSelectedCategory = (value) => {
     setCategory(value);
   }
 
-  const filterTodoData = (value) => {
-
-    var updatedTodos = [];
-
-    switch (value) {
-      case 'all':
-        // supply the unfiltered todo list as data to the flatlist
-        console.log('switch case all');
-        setFilteredTodos(todos);
-        break;
-      case 'completed':
-        // supply the completed todos as data to the flatlist
-        console.log('switch case completed');
-        updatedTodos = todos.filter(todo => todo.completed == true);
-        setFilteredTodos(updatedTodos);
-        break;
-      case 'remaining':
-        // supply the incomplete todos as data to the flatlist
-        console.log('switch case remaining');
-        updatedTodos = todos.filter(todo => todo.completed == false);
-        setFilteredTodos(updatedTodos);
-        break;
-      default:
-        // supply the unfiltered todo list as data to the flatlist
-        console.log('switch case default');
-        setFilteredTodos(todos);
-    }
-  }
+  
   
   const deleteList = () => {
     setTodos([]);
   }
-
-  const renderTodos = ({ item }) => (
-    <TodoItem item={item} removeTodoHandler={removeTodoHandler} toggleTodoHandler={toggleTodoHandler} />
-  )
 
   return (
     <Provider store={store}>
@@ -84,13 +56,7 @@ export default function App() {
         <View style={appStyles.content}>
           <Header deleteList={deleteList} />
           <CategoryPicker handleSelectedCategory={handleSelectedCategory} />
-          <View style={appStyles.todoList}>
-            <FlatList
-              data={filteredTodos}
-              renderItem={renderTodos}
-              keyExtractor={(item) => item.id}
-            />
-          </View>
+          <TodoList/>
         </View>
         <View style={appStyles.bottomView}>
           <AddTodo />
