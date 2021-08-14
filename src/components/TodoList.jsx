@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { View, FlatList } from 'react-native'
-import TodoItem from './TodoItem'
-import { todoListStyles, colors } from '../../styles/global'
+import { View, FlatList, StyleSheet, Dimensions } from 'react-native'
+import { ListEmpty, TodoItem } from './list'
+import { todoListStyles } from '../../styles/global'
+
 
 
 const TodoList = () => {
 
         const [filteredTodos, setFilteredTodos] = useState([]);
-        const todoList = useSelector(state => state.todos)
-
-        useEffect(() => {
-                console.log('todoList ', todoList);
-        }, [])
+        const todoList = useSelector((state) => state.todos);
+        const visibilityFilter = useSelector((state) => state.visibilityFilter);
+        console.log('todoList ', todoList);
+        console.log('filter', visibilityFilter);
 
 
         const filterTodoData = (value) => {
@@ -23,7 +23,7 @@ const TodoList = () => {
                         case 'all':
                                 // supply the unfiltered todo list as data to the flatlist
                                 console.log('switch case all');
-                                setFilteredTodos(todos);
+                                setFilteredTodos(todoList);
                                 break;
                         case 'completed':
                                 // supply the completed todos as data to the flatlist
@@ -45,7 +45,7 @@ const TodoList = () => {
         }
 
         const renderTodos = ({ item }) => (
-                <TodoItem item={item} />
+                <TodoItem item={item} text={item.text}/>
         )
 
         return (
@@ -54,10 +54,10 @@ const TodoList = () => {
                                 data={todoList}
                                 renderItem={renderTodos}
                                 keyExtractor={(item) => item.id}
+                                ListEmptyComponent={ListEmpty}
                         />
                 </View>
         )
 }
 
 export default TodoList
-

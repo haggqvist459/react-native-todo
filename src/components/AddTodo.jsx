@@ -3,19 +3,8 @@ import { View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import { addTodoStyles, colors  } from '../../styles/global';
-import { ACTIONS } from '../utils/constants';
+import { addItem } from '../redux/actions';
 
-// call the redux store actions add here
-/*
-
- if (textInput.length <= 2) {
-      console.log("input too short!");
-      createAlert();
-      return;
-    }
-
-
-*/
 export default function AddTodo() {
 
     const dispatch = useDispatch();
@@ -35,7 +24,7 @@ export default function AddTodo() {
             createAlert();
             return;
         } else {
-            dispatch({type: ACTIONS.ADD_ITEM, payload: { text: textInput }});
+            dispatch(addItem(textInput));
             clearInput();
         }
     }

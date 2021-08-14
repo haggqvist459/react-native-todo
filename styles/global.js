@@ -33,13 +33,14 @@ export const appStyles = StyleSheet.create({
         // if you add horizontal padding it will affect the position of the addTodo component
     },
     bottomView: {
-        paddingBottom: 40
+        paddingBottom: 5,
     }
 });
 
 export const headerStyles = StyleSheet.create({
     header: {
-        height: '15%',
+        // height: '15%',
+        paddingTop: 40,
         backgroundColor: colors.primary,
         display: 'flex',
         flexDirection: 'row',
@@ -70,6 +71,7 @@ export const addTodoStyles = StyleSheet.create({
         fontSize: 28,
         marginTop: 15,
         paddingBottom: 10,
+        flex: 1,
     },
     addIcon: {
         paddingRight: 10,
@@ -78,8 +80,9 @@ export const addTodoStyles = StyleSheet.create({
 
 export const todoListStyles = StyleSheet.create({
     todoList: {
-        height: '80%',
-        paddingBottom: 10,
+        flex: 1,
+        // height: '80%',
+        // paddingBottom: 10,
     },
 })
 
@@ -90,23 +93,14 @@ export const todoItemStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-
-        // temporary dev styles
-        // borderColor: colors.primaryText,
-        // borderWidth: 1,
-        // borderRadius: 5,
+        // borderBottomWidth: 1,
     },
     todoRow: {
-        padding: 10,
+        paddingVertical: 10,
         flexDirection: 'row',
         flex: 1,
         alignItems: 'stretch',
         alignItems: 'center',
-
-        // temporary dev styles
-        // borderColor: colors.primaryText,
-        // borderWidth: 1,
-        // borderRadius: 5,
     },
     todoText: {
         fontSize: 20,
@@ -118,20 +112,11 @@ export const todoItemStyles = StyleSheet.create({
         textDecorationLine: 'line-through'
     },
     deleteIcon: {
-        padding: 10,
-
-        // temporary dev styles
-        // borderColor: colors.primaryText,
-        // borderWidth: 1,
-        // borderRadius: 5,
+        paddingLeft: 10,
+        paddingVertical: 10,
     },
     checkIcon: {
         paddingRight: 10,
-        
-        // temporary dev styles
-        // borderColor: colors.primaryText,
-        // borderWidth: 1,
-        // borderRadius: 5,
     },
 })
 
@@ -169,3 +154,8 @@ export const pickerStyle = StyleSheet.create({
         color: colors.primaryText
     }
 })
+
+        // temporary dev styles
+        // borderColor: colors.primaryText,
+        // borderWidth: 1,
+        // borderRadius: 5,

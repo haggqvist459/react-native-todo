@@ -1,74 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, FlatList, Alert, StatusBar, } from 'react-native';
-import { Provider, useSelector } from 'react-redux';
-import store from './src/redux/store'
+import { SafeAreaView, View, FlatList, Alert, StatusBar, Dimensions } from 'react-native';
+import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native'
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 // import { Accelerometer } from 'expo-sensors';
-import { AddTodo, CategoryPicker, CustomAlert, Header, TodoList } from './src/components';
+import { AddTodo, Header, TodoList } from './src/components';
 import { appStyles, colors } from './styles/global';
 
 
-export default function App() {
-
-  //   const todoList = useSelector(state => state.todos);
-    // console.log('todoList ', todoList);
-
-  const [todos, setTodos] = useState([]);
-  const [category, setCategory] = useState();
-  
-
-
-  useEffect(() => {
-    console.log("useEffect, []");
-    // console.log('todoList ', todoList);
-    if (todos.length === 0) {
-      // loadFromStorage();
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log("useEffect, [category]");
-    console.log("category selected: ", category);
-    // filterTodoData(category);
-  }, [category]);
-
-  useEffect(() => {
-    console.log("useEffect, [todos]");
-    // saveToStorage();
-    // filterTodoData(category);
-  }, [todos]);
-
-  const handleSelectedCategory = (value) => {
-    setCategory(value);
-  }
-
-  
-  
-  const deleteList = () => {
-    setTodos([]);
-  }
+const App = () => {
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={appStyles.container}>
-        <StatusBar
-          backgroundColor={colors.primary}
-          barStyle='dark-content' />
-        <View style={appStyles.content}>
-          <Header deleteList={deleteList} />
-          <CategoryPicker handleSelectedCategory={handleSelectedCategory} />
-          <TodoList/>
-        </View>
+      <Header />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={appStyles.container}>
+          <TodoList />
         <View style={appStyles.bottomView}>
           <AddTodo />
         </View>
-      </SafeAreaView>
+      </KeyboardAvoidingView>
     </Provider>
   );
 }
 
+export default App;
 
-/* 
+/*
+ <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={appStyles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ flex: 1 }}>
+            <View style={appStyles.content}>
+              <Header deleteList={deleteList} />
+              <CategoryPicker handleSelectedCategory={handleSelectedCategory} />
+              <TodoList />
 
+            </View>
+            <View style={appStyles.bottomView}>
+              <AddTodo />
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
 
   const saveToStorage = async () => {
     try {
@@ -98,6 +74,26 @@ export default function App() {
     }
   }
 
+// useEffect(() => {
+  //   console.log("useEffect, []");
+  //   // console.log('todoList ', todoList);
+  //   if (todos.length === 0) {
+  //     // loadFromStorage();
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log("useEffect, [category]");
+  //   console.log("category selected: ", category);
+  //   // filterTodoData(category);
+  // }, [category]);
+
+  // useEffect(() => {
+  //   console.log("useEffect, [todos]");
+  //   // saveToStorage();
+  //   // filterTodoData(category);
+  // }, [todos]);
+
 
 
   const removeTodoHandler = (id) => {
@@ -107,28 +103,16 @@ export default function App() {
     });
   }
 
-  const toggleTodoHandler = (id) => {
-    console.log("toggleTodoHandler: ", id);
-    setTodos((todos) => {
-      return todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
-    });
-  }
 
-  const addTodoHandler = (textInput) => {
-
-    if (textInput.length <= 2) {
-      console.log("input too short!");
-      createAlert();
-      return;
+      const loadFromStorage = async () => {
+        try {
+            console.log("asyncStorage: ", await AsyncStorage.getItem(TODO_LIST_STORAGE));
+            const stringifiedTodoList = await AsyncStorage.getItem(TODO_LIST_STORAGE)
+            console.log("@loadFromStorage in TodoList: ", stringifiedTodoList);
+            return stringifiedTodoList != null ? JSON.parse(stringifiedTodoList) : undefined;
+        } catch (error) {
+            console.log("error @loadFromStorage in TodoList", error.message);
+            return undefined;
+        }
     }
-
-    console.log("addTodoHandler: ", textInput);
-    setTodos(todos.concat({
-      text: textInput,
-      id: (new Date().getTime()).toString(),
-      completed: false
-    }));
-  }
-
-
 */
